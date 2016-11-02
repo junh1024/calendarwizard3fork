@@ -153,7 +153,7 @@ settings.calendarsPerPageOptions = new Array( '1', '2', '3', '4', '6', '8', '9',
 settings.pageTypeOptions         = new Array( 'Auto', 'Current Text Frame', 'New Document', 'Current Document' );
 settings.pageOrientationOptions  = new Array( 'default', 'Portrait', 'Landscape' );
 settings.pageSizeOptions            = new Array( "Letter", "Legal", "Tabloid", "Letter - Half", "Legal - Half", "A3", "A4", "A5", "B5" ); 
-settings.calendarCustomSizeUnitOptions = new Array( 'inches', 'points', 'centimeters' );
+settings.calendarCustomSizeUnitOptions = new Array( 'centimeters','inches', 'points'); //changed
 settings.styleSetOptions         = new Array( '', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15' );
 settings.headerOptions           = new Array( "Auto", "Short: S", "Mid: Sun", "Full: Sunday");
 settings.languageOptions         = new Array( 'English', 
@@ -194,7 +194,7 @@ settings.languageOptions         = new Array( 'English',
                                             );
 
 // defaults for calendar generation
-settings.calendarSpacing = 0.25;
+settings.calendarSpacing = 0.1; //changed
 settings.calendarVerticalSpacing   = settings.calendarSpacing;
 settings.calendarHorizontalSpacing = settings.calendarSpacing;
 settings.miniCalendarSize = new Array( "2in", "2in", "2.75in", "2.75in" ); // 0.75 inches square
@@ -3402,7 +3402,7 @@ function SetTheDocumentStyles( settings )
          }
          else if( settings.iCalendarsPerPage >= 4 )
          {
-            titleSize = 24;
+            titleSize = 18; //changed
          }
          else
          {
@@ -4141,9 +4141,9 @@ function bGetUserInput( settings, selector )
           with(dialogColumns.add())
           {
             selector.StartMonth = dropdowns.add({stringList:settings.monthOptions,
-                                                 selectedIndex:settings.today.getMonth()});
+                                                 selectedIndex:0}); //changed
             selector.EndMonth = dropdowns.add({stringList:settings.monthOptions,
-                                               selectedIndex:settings.today.getMonth()});
+                                               selectedIndex:5});  //changed
           }
           with(dialogColumns.add())
           {
@@ -4180,7 +4180,7 @@ function bGetUserInput( settings, selector )
             {
                staticTexts.add({staticLabel:"Date Rows"});
                selector.MaxRowCount = dropdowns.add({stringList:settings.maxRowCountOptions,
-                                                     selectedIndex:0});
+                                                     selectedIndex:2}); //changed
             }
             with( dialogRows.add() )
             {
@@ -4201,7 +4201,7 @@ function bGetUserInput( settings, selector )
             }
             with( dialogRows.add() )
             {
-               selector.IncludeWeekDayNames = checkboxControls.add({checkedState:true});
+               selector.IncludeWeekDayNames = checkboxControls.add({checkedState:false}); //changed
                staticTexts.add({staticLabel:"Include Week Day Names"});
             }
             with( dialogRows.add() )
@@ -4450,7 +4450,7 @@ function bGetUserInput( settings, selector )
               {
                  staticTexts.add({staticLabel:"Calendars per Page"});
                  selector.CalendarsPerPage = dropdowns.add({stringList:settings.calendarsPerPageOptions,
-                    selectedIndex:0});
+                    selectedIndex:4}); //changed
                  staticTexts.add({staticLabel:" Color Space"});
                  selector.ColorSpace = dropdowns.add({stringList:settings.colorSpaceOptions,
                     selectedIndex:0});
