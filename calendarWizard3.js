@@ -195,8 +195,8 @@ settings.languageOptions         = new Array( 'English',
 
 // defaults for calendar generation
 //settings.calendarSpacing = //changed, disabled.
-settings.calendarVerticalSpacing   = 0.079; //changed - 0.2cm in inches;
-settings.calendarHorizontalSpacing = 0.197; //changed - 0.5cm in inches
+settings.calendarVerticalSpacing   = 0.2/2.54; //changed - 0.2cm in inches;
+settings.calendarHorizontalSpacing = 0.5/2.54; //changed - 0.5cm in inches
 settings.miniCalendarSize = new Array( "2in", "2in", "2.75in", "2.75in" ); // 0.75 inches square
 settings.workWeekCellWidth = 0.25;
 
@@ -982,7 +982,7 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
                   }
                   else
                   {
-                      //something else to find... CHANGED: so this whle thing is pslit cell?
+                      //something else to find... CHANGED: so this whole thing is split cell?
                      if( settings.bCellStyles )
                      {
                          // myCells.item(i).appliedCellStyle = myDocument.cellStyles.item( "cal_dateSplitCell" + settings.styleSet );
@@ -993,17 +993,17 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
                         // myCells.item(i).verticalJustification = VerticalJustification.justifyAlign;
                       }
 					  //changed to wrap
-					  if (!myCells.item(i).contents) 
+					  if (!myCells.item(i).contents) //if the cell is empty aka normally filled
 					  
 					  {
 					      // myCells.item(i).contents = daysInTheMonth.pop(); 
 					      myCells.item(i).contents = daysInTheMonth.pop(); //hmm
 					  }
 					  
-					  else {
-					  var myvar = i;
-					  alert(myvar);
-							myCells.item(myvar).contents = daysInTheMonth.pop(); 
+					  else { //else it should be wrapped
+myRow = rows.item(2);//go back 2 start of month
+ myCells = myRow.cells;
+							myCells.item(i).contents = daysInTheMonth.pop(); 
 
 					 }
 					 //changed to wrap
