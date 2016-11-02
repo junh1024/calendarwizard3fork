@@ -1,6 +1,6 @@
 ﻿/*
    Indesign Calendar Wizard
-   Release 3.18.00
+   Release 3.18.00m (Modified by junh1024, see https://github.com/junh1024/calendarwizard3fork )
 
    Authored by by Scott Selberg
    March 11, 2006
@@ -194,9 +194,9 @@ settings.languageOptions         = new Array( 'English',
                                             );
 
 // defaults for calendar generation
-settings.calendarSpacing = 0.1; //changed
-settings.calendarVerticalSpacing   = settings.calendarSpacing;
-settings.calendarHorizontalSpacing = settings.calendarSpacing;
+//settings.calendarSpacing = //changed, disabled.
+settings.calendarVerticalSpacing   = 0.079; //changed - 0.2cm in inches;
+settings.calendarHorizontalSpacing = 0.197; //changed - 0.5cm in inches
 settings.miniCalendarSize = new Array( "2in", "2in", "2.75in", "2.75in" ); // 0.75 inches square
 settings.workWeekCellWidth = 0.25;
 
@@ -982,18 +982,31 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
                   }
                   else
                   {
-                      //something else to find...
+                      //something else to find... CHANGED: so this whle thing is pslit cell?
                      if( settings.bCellStyles )
                      {
-                         myCells.item(i).appliedCellStyle = myDocument.cellStyles.item( "cal_dateSplitCell" + settings.styleSet );
+                         // myCells.item(i).appliedCellStyle = myDocument.cellStyles.item( "cal_dateSplitCell" + settings.styleSet );
                      }
                      else
                      {
-                        myCells.item(i).topLeftDiagonalLine = true;
-                        myCells.item(i).verticalJustification = VerticalJustification.justifyAlign;
+                        // myCells.item(i).topLeftDiagonalLine = true; //changed
+                        // myCells.item(i).verticalJustification = VerticalJustification.justifyAlign;
                       }
-                     myCells.item(i).contents = myCells.item(i).contents + "\r" + daysInTheMonth.pop();
+					  //changed to wrap
+					  if (!myCells.item(i).contents) 
+					  
+					  {
+					      // myCells.item(i).contents = daysInTheMonth.pop(); 
+					      myCells.item(i).contents = daysInTheMonth.pop(); //hmm
+					  }
+					  
+					  else {
+					  var myvar = i;
+					  alert(myvar);
+							myCells.item(myvar).contents = daysInTheMonth.pop(); 
 
+					 }
+					 //changed to wrap
                      if( settings.bCS )
                      {
                         csLabelMap[ myCells.item(i).id ] = " ";
@@ -4143,14 +4156,14 @@ function bGetUserInput( settings, selector )
             selector.StartMonth = dropdowns.add({stringList:settings.monthOptions,
                                                  selectedIndex:0}); //changed
             selector.EndMonth = dropdowns.add({stringList:settings.monthOptions,
-                                               selectedIndex:5});  //changed
+                                               selectedIndex:11});  //changed
           }
           with(dialogColumns.add())
           {
             selector.StartYear = dropdowns.add({stringList:settings.yearOptions,
-                                                selectedIndex:8});
+                                                selectedIndex:9}); //changed
             selector.EndYear = dropdowns.add({stringList:settings.yearOptions,
-                                              selectedIndex:8});
+                                              selectedIndex:9}); //changed
           }
         }
 
@@ -4180,7 +4193,7 @@ function bGetUserInput( settings, selector )
             {
                staticTexts.add({staticLabel:"Date Rows"});
                selector.MaxRowCount = dropdowns.add({stringList:settings.maxRowCountOptions,
-                                                     selectedIndex:2}); //changed
+                                                     selectedIndex:1}); //changed
             }
             with( dialogRows.add() )
             {
@@ -4201,7 +4214,7 @@ function bGetUserInput( settings, selector )
             }
             with( dialogRows.add() )
             {
-               selector.IncludeWeekDayNames = checkboxControls.add({checkedState:false}); //changed
+               selector.IncludeWeekDayNames = checkboxControls.add({checkedState:true}); //changed, not
                staticTexts.add({staticLabel:"Include Week Day Names"});
             }
             with( dialogRows.add() )
