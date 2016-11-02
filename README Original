@@ -28,7 +28,7 @@ Thanks to Jan Suhr, Robert Cornelius, and Steve Nichols.
              generation of this tool 
 Thanks to Gary Spedding for the first round of user feedback
 Thanks to Theo Duijkers for the Dutch weeks and months
-Thanks to Ulrik Södergren for Swedish language   
+Thanks to Ulrik SÃ¶dergren for Swedish language   
 Thanks to David Blatner for the table and cell styles suggestion, 
              the CMYK colors suggestion, and for reading the currently 
              selected text frame for holidays suggestion.
@@ -37,7 +37,7 @@ Thanks to Barbara L for noticing the order of weekdays in French,
 Thanks to Ott Rammo for the Estonian language update
 Thanks to Giancarlo Gamberini for the Italian language update
 Thanks to Robert Siemi?ski for the Polish language update
-Thanks to Szabó Szabolcs for the Hungarian language update
+Thanks to SzabÃ³ Szabolcs for the Hungarian language update
 Thanks to Tim Fennell for finding a bug with dates in split cells
 Thanks to Tim Fennell for finding a bug in the year of the mini-calendar.
 Thanks to Magnus Nyland for Norwegian language update.
@@ -75,7 +75,7 @@ Thanks to George Shustov for the Russian Translation
 Thanks to Andrej Damjanovic for the Slovenian Translation
 Thanks to Tobias Kraft for the German Holidays
 Thanks to Joan Grytness for finding the bug where split cells had no "splitcell" style
-Thanks to ¿¿¿ for the Chinese translation
+Thanks to Â¿Â¿Â¿ for the Chinese translation
 Thanks to Eric Lee for detecting that the custom holiday file selection only picked up one file rather than all
 Thanks to Jeffrey Trimble for suggesting a Julian Date Layer (Day of Year)
 Thanks to George Buxton for the New Zealand Holidays
