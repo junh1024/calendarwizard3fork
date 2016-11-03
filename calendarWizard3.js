@@ -984,14 +984,25 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
                   {
                       //something else to find... CHANGED: so this whole thing is split cell?
 					  if (!myCells.item(i).contents) //if the cell is empty aka normally filled
-					  {
-					      myCells.item(i).contents = daysInTheMonth.pop(); //hmm
+					  {//this is never called
+					       myCells.item(i).contents = daysInTheMonth.pop(); //hmm
 					  }
 					  else //else it should be wrapped
 					  {
+							 // alert("hello thar3");
 							myRow = rows.item(2);//go back to start of month. 3rd row is the 1st date row fater title & weekday desc.
 							myCells = myRow.cells;
 							myCells.item(i).contents = daysInTheMonth.pop(); 
+							if(i==0)
+							{
+								myCells.item(i).appliedCellStyle = myDocument.cellStyles.item( "cal_sunday" + settings.styleSet);
+								myCells.item(i).texts[0].appliedParagraphStyle="cal_sunday" ;
+							}
+							else
+							{
+								myCells.item(i).appliedCellStyle = myDocument.cellStyles.item( "cal_date" + settings.styleSet);
+								myCells.item(i).texts[0].appliedParagraphStyle="cal_date" ;
+							}
 					 }
 					 
                      if( settings.bCS )
@@ -1005,7 +1016,7 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
 
                      bMiniCalendar ? selectedStyle = "calMini_date" : selectedStyle = "cal_date";
                      myCells.item(i).insertionPoints.item(0).appliedParagraphStyle = myDocument.paragraphStyles.item(selectedStyle + settings.styleSet);
-                     bMiniCalendar ? selectedStyle = "calMini_date_splitCellSecondLine" : selectedStyle = "cal_date_splitCellSecondLine";
+                     bMiniCalendar ? selectedStyle = "calMini_date_splitCellSecondLine" : selectedStyle = "cal_date"; //changed
                      myCells.item(i).insertionPoints.lastItem().appliedParagraphStyle = myDocument.paragraphStyles.item(selectedStyle + settings.styleSet);
                   }
                }
@@ -2229,7 +2240,7 @@ function addJulianDates( settings, calendarTable, julianDatesTable )
 
             dateJan1.setFullYear( parseInt( year ), 0, 1 );
             dateNow.setFullYear( parseInt( year ), parseInt( month ) - 1, parseInt( day )+1 );
-            myJulianDateCells[i].contents = "\n".concat( Math.ceil( (dateNow.valueOf() - dateJan1.valueOf())/(60*60*24*1000)).toString() );
+            myJulianDateCells[i].contents = " ".concat( Math.ceil( (dateNow.valueOf() - dateJan1.valueOf())/(60*60*24*1000)).toString() ); //changed. This change is made so that it looks neat on really small sizes
          }
       }
    }
@@ -2822,8 +2833,8 @@ function bUserInputOK( settings )
           settings.bAddWorkWeek ||
           settings.bMoonsLayer )
       {
-         alert( "Can't select work week, moon phases, or holidays with a fixed row count of 5.  Changing to auto." );
-         settings.iFixedRowCount = 0;
+         // alert( "Can't select work week, moon phases, or holidays with a fixed row count of 5.  Changing to auto." );
+         // settings.iFixedRowCount = 0; changed
       }
    }
 
@@ -3390,8 +3401,8 @@ function SetTheDocumentStyles( settings )
 
       //Add paragraph styles
       try{ paragraphStyles.item("cal_base" + settings.styleSet).name;  }
-      catch (myError){
-         paragraphStyles.add({name:"cal_base" + settings.styleSet}); //used for ID CD6????
+      catch (myError){ //changed
+         paragraphStyles.add({name:"cal_base" + settings.styleSet, pointSize:10, appliedFont:"Arial Unicode MS" }); 
       }
 
       try{ paragraphStyles.item("cal_title" + settings.styleSet).name; }
@@ -3473,15 +3484,15 @@ function SetTheDocumentStyles( settings )
                   fillColor:colors.item("cal_nonMonthDay" + settings.styleSet) });
           }
       }
-      try{ paragraphStyles.item("cal_date_splitCellSecondLine" + settings.styleSet).name; }
+      try{ paragraphStyles.item("cal_date" + settings.styleSet).name; } //changed
       catch (myError){
-         paragraphStyles.add({name:"cal_date_splitCellSecondLine" + settings.styleSet, basedOn:paragraphStyles.item("cal_date" + settings.styleSet),
+         paragraphStyles.add({name:"cal_date" + settings.styleSet, basedOn:paragraphStyles.item("cal_date" + settings.styleSet), //changed
             justification:Justification.leftAlign,
             nextStyle:paragraphStyles.item("cal_text" + settings.styleSet) });
 
          if( !(settings.bCS2 == 1 || settings.bCS == 1 ) )
          {
-            paragraphStyles.item( "cal_date_splitCellSecondLine" + settings.styleSet ).justification = Justification.LEFT_ALIGN;
+            paragraphStyles.item( "cal_date" + settings.styleSet ).justification = Justification.LEFT_ALIGN; //changed
          }
       }
 
@@ -3649,7 +3660,7 @@ function SetTheDocumentStyles( settings )
                justification:Justification.centerAlign });
             if( !(settings.bCS2 == 1 || settings.bCS == 1 ) )
             {
-               paragraphStyles.item( "cal_date_splitCellSecondLine" + settings.styleSet ).justification = Justification.LEFT_ALIGN;
+               paragraphStyles.item( "cal_date" + settings.styleSet ).justification = Justification.LEFT_ALIGN; //changed
             }
          }
 
@@ -3719,8 +3730,8 @@ function SetTheDocumentStyles( settings )
          }
 
          try{ cellStyles.item("cal_day" + settings.styleSet).name; }
-         catch (myError){
-            cellStyles.add({name:"cal_day" + settings.styleSet,
+         catch (myError){ //changed
+            cellStyles.add({name:"cal_day" + settings.styleSet,  leftInset:0.0  ,rightInset:0.0 ,
                basedOn:cellStyles.item("cal_base" + settings.styleSet),
                appliedParagraphStyle:paragraphStyles.item( "cal_day" + settings.styleSet )});
          }
