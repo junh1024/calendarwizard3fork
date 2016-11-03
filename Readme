@@ -1,4 +1,11 @@
-These changes to CW3 are optimized for my use.
+These changes to CW3 are optimized for my use. Some stuff is deleted.
 
 Optimized for:
-6 months over 2 pages, 19x19cm design, metric units, a few other tweaks
+12 months over 2 pages, small designs, metric units, a few other tweaks
+
+
+Optimized for small designs, I've tried to make dates wrap instead of split for some months.
+
+Original was GPL so this is too. https://sourceforge.net/projects/calendarwizard/
+
+See http://calendarwizard.sourceforge.net/
