@@ -128,8 +128,8 @@ settings.yearOptions = new Array( (settings.today.getFullYear()-8)+"",
                                   (settings.today.getFullYear()+4)+"",
                                   (settings.today.getFullYear()+5)+"",
                                   (settings.today.getFullYear()+6)+"",
-                                  (settings.today.getFullYear()+7)+"",
-                                  (settings.today.getFullYear()+8)+"",
+                                  (settings.today.getFullYear()+7)+"",  //changed
+                                  (settings.today.getFullYear()+8)+""/*,
                                   (settings.today.getFullYear()+9)+"",
                                   (settings.today.getFullYear()+10)+"",
                                   (settings.today.getFullYear()+11)+"",
@@ -141,7 +141,7 @@ settings.yearOptions = new Array( (settings.today.getFullYear()-8)+"",
                                   (settings.today.getFullYear()+17)+"",
                                   (settings.today.getFullYear()+18)+"",
                                   (settings.today.getFullYear()+19)+"",
-                                  (settings.today.getFullYear()+20)+""
+                                  (settings.today.getFullYear()+20)+""*/
                                   );
 settings.startDayOptions         = new Array( 'Sunday', 'Monday', 'Saturday');
 settings.monthOptions            = new Array( 'January', 'February', 'March', 'April', 'May', 'June',
@@ -156,13 +156,13 @@ settings.pageSizeOptions            = new Array( "Letter", "Legal", "Tabloid", "
 settings.calendarCustomSizeUnitOptions = new Array( 'centimeters','inches', 'points'); //changed
 settings.styleSetOptions         = new Array( '', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15' );
 settings.headerOptions           = new Array( "Auto", "Short: S", "Mid: Sun", "Full: Sunday");
-settings.languageOptions         = new Array( 'English', 
-                                              'Arabic (عربي)',
-                                              'Azerbaijani',
+settings.languageOptions         = new Array( 'English', //disable some languages, but keep line count until 5K or so lines.
+                                              /* 'Arabic (عربي)',
+                                             'Azerbaijani',
                                               'Bosnian',                                             
                                               'Bulgarian',
-                                              'Catalan',
-                                              'Chinese (繁體中文)',
+                                              'Catalan', */
+                                              'Chinese & English' /*,
                                               'Croatian',
                                               'Czech',
                                               'Basque',
@@ -190,7 +190,7 @@ settings.languageOptions         = new Array( 'English',
                                               'Slovenian',
                                               'Spanish', 
                                               'Swedish',
-                                              'Turkish'
+                                              'Turkish'*/
                                             );
 
 // defaults for calendar generation
@@ -3389,28 +3389,28 @@ function SetTheDocumentStyles( settings )
       //}
 
       //Add paragraph styles
-      try{ paragraphStyles.item("cal_base" + settings.styleSet).name; }
+      try{ paragraphStyles.item("cal_base" + settings.styleSet).name;  }
       catch (myError){
-         paragraphStyles.add({name:"cal_base" + settings.styleSet});
+         paragraphStyles.add({name:"cal_base" + settings.styleSet}); //used for ID CD6????
       }
 
       try{ paragraphStyles.item("cal_title" + settings.styleSet).name; }
       catch (myError){
          if( settings.iCalendarsPerPage >= 8 )
          {
-            titleSize = 18;
+            titleSize = 16;
          }
          else if( settings.iCalendarsPerPage >= 4 )
          {
-            titleSize = 18; //changed
+            titleSize = 16; //changed
          }
          else
          {
             titleSize = 36;
          }
          paragraphStyles.add({name:"cal_title" + settings.styleSet, basedOn:paragraphStyles.item("cal_base" + settings.styleSet),
-            justification:Justification.centerAlign,
-            capitalization:Capitalization.smallCaps,
+            justification:Justification.centerAlign, //changed
+            //capitalization:Capitalization.smallCaps,
             pointSize:titleSize});
       }
 
@@ -3586,8 +3586,8 @@ function SetTheDocumentStyles( settings )
          try{ paragraphStyles.item("calMini_title" + settings.styleSet).name; }
          catch (myError){
             paragraphStyles.add({name:"calMini_title" + settings.styleSet, basedOn:paragraphStyles.item("calMini_base" + settings.styleSet),
-               justification:Justification.centerAlign,
-               capitalization:Capitalization.smallCaps });
+               justification:Justification.centerAlign/*,
+               capitalization:Capitalization.smallCaps */});
          }
 
          try{ paragraphStyles.item("calMini_day" + settings.styleSet).name; }
@@ -4168,7 +4168,7 @@ function bGetUserInput( settings, selector )
             {
                staticTexts.add({staticLabel:"Language"});
                selector.Language = dropdowns.add({stringList:settings.languageOptions,
-                                                  selectedIndex:0});
+                                                  selectedIndex:1}); //defaults to CHN & EN
             }
             with( dialogRows.add() )
             {
@@ -4192,7 +4192,7 @@ function bGetUserInput( settings, selector )
             {
                staticTexts.add({staticLabel:"Heading Style"});
                selector.headerOptions = dropdowns.add({stringList:settings.headerOptions,
-                                                       selectedIndex:0});
+                                                       selectedIndex:1}); //changed
             }
             with( dialogRows.add() )
             {
@@ -4221,7 +4221,7 @@ function bGetUserInput( settings, selector )
             }
             with( dialogRows.add() )
             {
-               selector.bHighlightSundays = checkboxControls.add({checkedState:false});
+               selector.bHighlightSundays = checkboxControls.add({checkedState:true}); //changed
                staticTexts.add({staticLabel:"Highlight Sundays"});
             }
             with( dialogRows.add() )
@@ -4923,57 +4923,14 @@ function moonPhasePercent( inDate )
 // --------------------------------------------------------------- //
 function selectLanguage( settings, selector )
 {
-   if( settings.languageOptions[ selector.Language.selectedIndex ] == "Arabic (عربي)" )
+   if( settings.languageOptions[ selector.Language.selectedIndex ] == "Chinese & English" )
    {
-      settings.months    = new Array( 'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر');
-      settings.daysLong  = new Array( 'الأحد', 'الأثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت' );
-      settings.daysMid   = new Array( 'أحد', 'أثن', 'ثلا', 'أرب', 'خمس', 'جمع', 'سبت' );
-      settings.daysShort = new Array( 'ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س' );
-   }
-   else if( settings.languageOptions[ selector.Language.selectedIndex ] == "Azerbaijani" )
-   {
-      settings.months    = new Array( 'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun',
-                                      'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr');
-      settings.daysLong  = new Array( 'Bazar', 'Bazar ertəsi', 'Çərşənbə axşamı', 'Çərşənbə', 
-                                      'Cümə axşamı', 'Cümə', 'Şənbə' );
-      settings.daysMid   = new Array( 'Bzr', 'Bzr ert', 'Çar axş', 'Çar', 'Cüm axş', 'Cüm', 'Şnb' );
-      settings.daysShort = new Array( 'B', 'Be', 'Ça', 'Ç', 'Ca', 'C', 'Ş' );
-   }
-   else if( settings.languageOptions[ selector.Language.selectedIndex ] == "Bosnian" )
-   {
-      settings.months    = new Array( 'Januar', 'Februar', 'Mart', 'April', 'Maj', 'Jun',
-                                      'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar');
-      settings.daysLong  = new Array( 'Nedjelja', 'Ponedjeljak', 'Utorak', 'Srijeda', 
-                                      'Četvrtak', 'Petak', 'Subota' );
-      settings.daysMid   = new Array( 'Ned', 'Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub' );
-      settings.daysShort = new Array( 'N', 'P', 'U', 'S', 'Č', 'P', 'S' );
-   }
-   else if( settings.languageOptions[ selector.Language.selectedIndex ] == "Bulgarian" )
-   {
-      settings.months    = new Array( 'Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни',
-                                      'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември');
-      settings.daysLong  = new Array( 'Неделя', 'Понеделник', 'Вторник', 'Сряда', 
-                                      'Четвъртък', 'Петък', 'Събота' );
-      settings.daysMid   = new Array( 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд' );
-      settings.daysShort = new Array( 'П', 'В', 'С', 'Ч', 'П', 'С', 'Н' );
-   }
-   else if( settings.languageOptions[ selector.Language.selectedIndex ] == "Catalan" )
-   {
-      settings.months    = new Array( 'Gener', 'Febrer', 'Març', 'Abril', 'Maig', 'Juny',
-                                      'Juliol', 'Agost', 'Setembre', 'Octubre', 'Novembre', 'Desembre');
-      settings.daysLong  = new Array( 'Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 
-                                      'Dijous', 'Divendres', 'Dissabte' );
-      settings.daysMid   = new Array( 'Dg', 'Dl', 'Dt', 'Dc', 'Dj', 'Dv', 'Ds' );
-      settings.daysShort = new Array( 'Dg', 'Dl', 'Dt', 'Dc', 'Dj', 'Dv', 'Ds' );
-   }  
-   else if( settings.languageOptions[ selector.Language.selectedIndex ] == "Chinese (繁體中文)" )
-   {
-      settings.months    = new Array( '一月', '二月', '三月', '四月', '五月', '六月',
-                                      '七月', '八月', '九月', '十月', '十一月', '十二月');
+      settings.months    = new Array( 'January 一月', 'February 二月', 'March 三月', 'April 四月', 'May 五月', 'June 六月',
+                                      'July 七月', 'August 八月', 'September 九月', 'October 十月', 'November 十一月', 'December 十二月');
       settings.daysLong  = new Array( '星期日', '星期一', '星期二', '星期三',
                                       '星期四', '星期五', '星期六' );
       settings.daysMid   = new Array( '週日', '週一', '週二', '週三', '週四', '週五', '週六');
-      settings.daysShort = new Array( '日', '一', '二', '三', '四', '五', '六' );
+      settings.daysShort = new Array( 'Sun 日', 'Mon 一', 'Tue 二', 'Wed 三', 'Thu 四', 'Fri 五', 'Sat 六' );
    }   
    else //English
    {
