@@ -926,9 +926,9 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
             {
                if( daysInTheMonth.length > 0 )
                {
-                  if( !bSplitCell )
-                  {
-                     day = daysInTheMonth.pop()
+                  if( true )//go back to start of month. 3rd row is the 1st date row fater title & weekday desc.
+                  {	if( bSplitCell ) 	{myRow = rows.item(2); 		myCells = myRow.cells;}
+                     day = daysInTheMonth.pop() //should be line 931
                      myCells.item(i).contents = day;
 
                      if( settings.bAddWorkWeek && !bWorkWeekLabeled && !bMiniCalendar )
@@ -980,31 +980,20 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
                         myCells.item(i).label = (iMonth+1).toString() + "-" + day + "-" + iYear.toString();
                      }
                   }
-                  else
+                /*  else
                   {
-                      //something else to find... CHANGED: so this whole thing is split cell?
-					  if (!myCells.item(i).contents) //if the cell is empty aka normally filled
-					  {//this is never called
-					       myCells.item(i).contents = daysInTheMonth.pop(); //hmm
-					  }
-					  else //else it should be wrapped
-					  {
-							 // alert("hello thar3");
-							myRow = rows.item(2);//go back to start of month. 3rd row is the 1st date row fater title & weekday desc.
-							myCells = myRow.cells;
-							myCells.item(i).contents = daysInTheMonth.pop(); 
-							if(i==0)
-							{
-								myCells.item(i).appliedCellStyle = myDocument.cellStyles.item( "cal_sunday" + settings.styleSet);
-								myCells.item(i).texts[0].appliedParagraphStyle="cal_sunday" ;
-							}
-							else
-							{
-								myCells.item(i).appliedCellStyle = myDocument.cellStyles.item( "cal_date" + settings.styleSet);
-								myCells.item(i).texts[0].appliedParagraphStyle="cal_date" ;
-							}
-					 }
-					 
+                      //something else to find...
+                     if( settings.bCellStyles )
+                     {
+                         myCells.item(i).appliedCellStyle = myDocument.cellStyles.item( "cal_dateSplitCell" + settings.styleSet );
+                     }
+                     else
+                     {
+                        myCells.item(i).topLeftDiagonalLine = true;
+                        myCells.item(i).verticalJustification = VerticalJustification.justifyAlign;
+                      }
+                     myCells.item(i).contents = myCells.item(i).contents + "\r" + daysInTheMonth.pop();
+
                      if( settings.bCS )
                      {
                         csLabelMap[ myCells.item(i).id ] = " ";
@@ -1016,9 +1005,9 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
 
                      bMiniCalendar ? selectedStyle = "calMini_date" : selectedStyle = "cal_date";
                      myCells.item(i).insertionPoints.item(0).appliedParagraphStyle = myDocument.paragraphStyles.item(selectedStyle + settings.styleSet);
-                     bMiniCalendar ? selectedStyle = "calMini_date_splitCellSecondLine" : selectedStyle = "cal_date"; //changed
+                     bMiniCalendar ? selectedStyle = "calMini_date_splitCellSecondLine" : selectedStyle = "cal_date_splitCellSecondLine";
                      myCells.item(i).insertionPoints.lastItem().appliedParagraphStyle = myDocument.paragraphStyles.item(selectedStyle + settings.styleSet);
-                  }
+                  } */
                }
                else
                {
