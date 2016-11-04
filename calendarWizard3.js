@@ -3484,16 +3484,16 @@ function SetTheDocumentStyles( settings )
                   fillColor:colors.item("cal_nonMonthDay" + settings.styleSet) });
           }
       }
-      try{ paragraphStyles.item("cal_date" + settings.styleSet).name; } //changed
+      try{ paragraphStyles.item("cal_sunday" + settings.styleSet).name; } //changed from cal_date_splitCellSecondLine. wrapped cells are sttaistcxosllay be more likeyl to be sundays
       catch (myError){
-         paragraphStyles.add({name:"cal_date" + settings.styleSet, basedOn:paragraphStyles.item("cal_date" + settings.styleSet), //changed
+         /*paragraphStyles.add({name:"cal_date" + settings.styleSet, basedOn:paragraphStyles.item("cal_date" + settings.styleSet), //changed
             justification:Justification.leftAlign,
             nextStyle:paragraphStyles.item("cal_text" + settings.styleSet) });
 
          if( !(settings.bCS2 == 1 || settings.bCS == 1 ) )
          {
             paragraphStyles.item( "cal_date" + settings.styleSet ).justification = Justification.LEFT_ALIGN; //changed
-         }
+         }*/
       }
 
       if( settings.bAddWorkWeek )
