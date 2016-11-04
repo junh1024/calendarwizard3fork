@@ -220,10 +220,10 @@ if( settings.bCS || settings.bCS2 )
    settings.holidaysFolder = new Folder( Folder.startup + "/Presets/Scripts/calendarWizard/holidays" );
    settings.help = new File( Folder.startup + "/Presets/Scripts/calendarWizard/README" );
 }
-else
+else //changed, CS6 uses this codeflow, and I changed the name of the JS so it can detect files
 {
-   settings.holidaysFolder = new Folder($.fileName.substring( 0, $.fileName.indexOf( "calendarWizard.js" ) ) + "holidays");
-   settings.help = new File($.fileName.substring( 0, $.fileName.indexOf( "calendarWizard.js" ) ) + "README");
+   settings.holidaysFolder = new Folder($.fileName.substring( 0, $.fileName.indexOf( "calendarWizard3.js" ) ) + "holidays");
+   settings.help = new File($.fileName.substring( 0, $.fileName.indexOf( "calendarWizard3.js" ) ) + "README");
 }
 settings.bHolidaysFile = new Array();
 
@@ -629,7 +629,7 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
             }
 
             // Set the style and contents of the merged middle cells
-            buffer.contents = month + " " + iYear;
+            buffer.contents = month/* + " " + iYear;*/ //changed, no year in month title
 
             // Set the cell style
             styles = new Object();
@@ -925,7 +925,7 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
             for( i = startCellCount; i < myCells.length; i++ )
             {
                if( daysInTheMonth.length > 0 )
-               {
+               {	
                   if( true )//go back to start of month. 3rd row is the 1st date row fater title & weekday desc.
                   {	if( bSplitCell ) 	{myRow = rows.item(2); 		myCells = myRow.cells;}
                      day = daysInTheMonth.pop() //should be line 931
@@ -949,12 +949,14 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
                      }
 
                      if( settings.bCellStyles )
-                     {
+                     {	
                         bMiniCalendar ? selectedStyle = "calMini_date" : selectedStyle = "cal_date";
                         myCells.item(i).appliedCellStyle = myDocument.cellStyles.item(selectedStyle + settings.styleSet);
-                        myCells.item(i).clearCellStyleOverrides( true );
-                        myCells.item(i).insertionPoints.everyItem().clearOverrides( OverrideType.ALL );
-                     }
+                        myCells.item(i).clearCellStyleOverrides( true ); 
+                        myCells.item(i).insertionPoints.everyItem().clearOverrides( OverrideType.ALL ); 
+						if( i==6 ) { /*alert("hello thar7");*/ myCells.item(i).appliedCellStyle = myDocument.cellStyles.item("cal_sunday" + settings.styleSet); myCells.item(i).texts[0].appliedParagraphStyle="cal_sunday" ; 
+						firstsat = rows.item(2).cells.item(i); firstsat.appliedCellStyle = myDocument.cellStyles.item("cal_sunday" + settings.styleSet);  firstsat.texts[0].appliedParagraphStyle="cal_sunday" ;} //changed
+                     }	
                      else
                      {
                         bMiniCalendar ? selectedStyle = "calMini_date" : selectedStyle = "cal_date";
@@ -978,7 +980,7 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
                      {
                         // needs to be after the clearCellStyleOverrides
                         myCells.item(i).label = (iMonth+1).toString() + "-" + day + "-" + iYear.toString();
-                     }
+                     } 						
                   }
                 /*  else
                   {
@@ -3719,8 +3721,8 @@ function SetTheDocumentStyles( settings )
          }
 
          try{ cellStyles.item("cal_day" + settings.styleSet).name; }
-         catch (myError){ //changed
-            cellStyles.add({name:"cal_day" + settings.styleSet,  leftInset:0.0  ,rightInset:0.0 ,
+         catch (myError){ 
+            cellStyles.add({name:"cal_day" + settings.styleSet,  leftInset:0.0  ,rightInset:0.0 , //changed
                basedOn:cellStyles.item("cal_base" + settings.styleSet),
                appliedParagraphStyle:paragraphStyles.item( "cal_day" + settings.styleSet )});
          }
@@ -3802,7 +3804,7 @@ function SetTheDocumentStyles( settings )
             catch (myError){
                cellStyles.add({name:"cal_holidayText" + settings.styleSet,
                   basedOn:cellStyles.item("cal_baseNoEdges" + settings.styleSet),
-                  appliedParagraphStyle:paragraphStyles.item( "cal_holiday"  + settings.styleSet),
+                  appliedParagraphStyle:paragraphStyles.item( "cal_holiday"  + settings.styleSet), leftInset:0.0  ,rightInset:0.0 , //changed
                   verticalJustification:VerticalJustification.BOTTOM_ALIGN});
             }
          }
