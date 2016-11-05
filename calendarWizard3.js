@@ -2232,8 +2232,7 @@ function addJulianDates( settings, calendarTable, julianDatesTable )
             dateJan1.setFullYear( parseInt( year ), 0, 1 );
             dateNow.setFullYear( parseInt( year ), parseInt( month ) - 1, parseInt( day )+1 ); //these things do julian 
             myJulianDateCells[i].contents = " ".concat( Math.ceil( (dateNow.valueOf() - dateJan1.valueOf())/(60*60*24*1000)).toString() ); //changed. This change is made so that it looks neat on really small sizes
-         if(i%6 != 0){ myJulianDateCells[i].texts[0].appliedParagraphStyle="cal_julianDateWD"; //apply new style to weekday of julian date
-		   }
+         if(i%6 != 0){ myJulianDateCells[i].texts[0].appliedParagraphStyle="cal_julianDateWD"; }//apply new style to weekday of julian date
 		 }
       }
    }
@@ -3557,9 +3556,9 @@ function SetTheDocumentStyles( settings )
          try{ paragraphStyles.item("cal_julianDate" + settings.styleSet).name; }
          catch (myError){
             paragraphStyles.add({name:"cal_julianDate" + settings.styleSet, basedOn:paragraphStyles.item("cal_base" + settings.styleSet),
-               justification:Justification.rightAlign, fillColor:colors.item("cal_julianDate" + settings.styleSet)});
+               justification:Justification.leftAlign, fillColor:colors.item("cal_julianDate" + settings.styleSet)});
 			   paragraphStyles.add({name:"cal_julianDateWD" + settings.styleSet, basedOn:paragraphStyles.item("cal_julianDate" + settings.styleSet),
-               justification:Justification.rightAlign, fillColor:colors.item("cal_julianDateWD" + settings.styleSet)});
+               fillColor:colors.item("cal_julianDateWD" + settings.styleSet)});
          }
       }
 
@@ -3824,9 +3823,9 @@ function SetTheDocumentStyles( settings )
 
             try{ cellStyles.item("cal_julianDateText" + settings.styleSet).name; }
             catch (myError){
-               cellStyles.add({name:"cal_julianDateText" + settings.styleSet,
-                  basedOn:cellStyles.item("cal_baseNoEdges" + settings.styleSet),
-                  appliedParagraphStyle:paragraphStyles.item( "cal_julianDate"  + settings.styleSet)
+               cellStyles.add({name:"cal_julianDateText" + settings.styleSet, basedOn:cellStyles.item("cal_baseNoEdges" + settings.styleSet),
+                  appliedParagraphStyle:paragraphStyles.item( "cal_julianDate"  + settings.styleSet), leftInset:0.0, //1mm in inches
+                  verticalJustification:VerticalJustification.BOTTOM_ALIGN //changed to BOTTOM_ALIGN
                   });
             }
          }
