@@ -954,7 +954,7 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
                         myCells.item(i).appliedCellStyle = myDocument.cellStyles.item(selectedStyle + settings.styleSet);
                         myCells.item(i).clearCellStyleOverrides( true ); 
                         myCells.item(i).insertionPoints.everyItem().clearOverrides( OverrideType.ALL ); 
-						if( i==6 ) { /*alert("hello thar7");*/ myCells.item(i).appliedCellStyle = myDocument.cellStyles.item("cal_sunday" + settings.styleSet); myCells.item(i).texts[0].appliedParagraphStyle="cal_sunday" ; 
+						if( i==6 ) { myCells.item(i).appliedCellStyle = myDocument.cellStyles.item("cal_sunday" + settings.styleSet); myCells.item(i).texts[0].appliedParagraphStyle="cal_sunday" ; 
 						firstsat = rows.item(2).cells.item(i); firstsat.appliedCellStyle = myDocument.cellStyles.item("cal_sunday" + settings.styleSet);  firstsat.texts[0].appliedParagraphStyle="cal_sunday" ;} //changed
                      }	
                      else
@@ -2230,9 +2230,11 @@ function addJulianDates( settings, calendarTable, julianDatesTable )
             year  = cellDate.substr( cellDate.indexOf( '-', 3 ) + 1, 4 );
 
             dateJan1.setFullYear( parseInt( year ), 0, 1 );
-            dateNow.setFullYear( parseInt( year ), parseInt( month ) - 1, parseInt( day )+1 );
+            dateNow.setFullYear( parseInt( year ), parseInt( month ) - 1, parseInt( day )+1 ); //these things do julian 
             myJulianDateCells[i].contents = " ".concat( Math.ceil( (dateNow.valueOf() - dateJan1.valueOf())/(60*60*24*1000)).toString() ); //changed. This change is made so that it looks neat on really small sizes
-         }
+         if(i%6 != 0){ myJulianDateCells[i].texts[0].appliedParagraphStyle="cal_julianDateWD"; //apply new style to weekday of julian date
+		   }
+		 }
       }
    }
 
@@ -3174,7 +3176,7 @@ function SetTheDocumentStyles( settings )
           try{ colors.item("cal_julianDate" + settings.styleSet).name; }
           catch (myError){ 
              if( settings.sColorSpace == 'CMYK' ){
-                colors.add({name:"cal_julianDate" + settings.styleSet, space:ColorSpace.cmyk, colorValue:[0,100,100,0]});
+                colors.add({name:"cal_julianDate" + settings.styleSet, space:ColorSpace.cmyk, colorValue:[0,88,78,0]});  colors.add({name:"cal_julianDateWD" + settings.styleSet, space:ColorSpace.cmyk, colorValue:[0,0,0,88]});
              } else if ( settings.sColorSpace == 'RBG' ){
                 colors.add({name:"cal_julianDate" + settings.styleSet, space:ColorSpace.rgb, colorValue:[255,0,0]});
              } else {
@@ -3555,8 +3557,9 @@ function SetTheDocumentStyles( settings )
          try{ paragraphStyles.item("cal_julianDate" + settings.styleSet).name; }
          catch (myError){
             paragraphStyles.add({name:"cal_julianDate" + settings.styleSet, basedOn:paragraphStyles.item("cal_base" + settings.styleSet),
-               justification:Justification.rightAlign,
-               fillColor:colors.item("cal_julianDate" + settings.styleSet)});
+               justification:Justification.rightAlign, fillColor:colors.item("cal_julianDate" + settings.styleSet)});
+			   paragraphStyles.add({name:"cal_julianDateWD" + settings.styleSet, basedOn:paragraphStyles.item("cal_julianDate" + settings.styleSet),
+               justification:Justification.rightAlign, fillColor:colors.item("cal_julianDateWD" + settings.styleSet)});
          }
       }
 
