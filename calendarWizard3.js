@@ -3281,7 +3281,7 @@ function SetTheDocumentStyles( settings )
          }
       }
 
-      if( settings.bBackgroundLayer )
+     /* if( settings.bBackgroundLayer ) //changed, dont make this color
       {
          try{ colors.item("cal_background" + settings.styleSet).name; }
          catch (myError){
@@ -3293,7 +3293,7 @@ function SetTheDocumentStyles( settings )
                colors.add({name:"cal_background" + settings.styleSet, space:ColorSpace.lab, colorValue:[100,0,0]});
             }
          }
-      }
+      }*/
 
       if( settings.bAddMiniCalendars )
       {
@@ -3825,7 +3825,7 @@ function SetTheDocumentStyles( settings )
             catch (myError){
                cellStyles.add({name:"cal_julianDateText" + settings.styleSet, basedOn:cellStyles.item("cal_baseNoEdges" + settings.styleSet),
                   appliedParagraphStyle:paragraphStyles.item( "cal_julianDate"  + settings.styleSet), 
-                  leftInset:0, rightInset:0, //in inches
+                  leftInset:0.025/2.54, rightInset:0.025/2.54, //in inches
                   verticalJustification:VerticalJustification.BOTTOM_ALIGN }); //changed to BOTTOM_ALIGN
             }
          }
@@ -3881,7 +3881,7 @@ function SetTheDocumentStyles( settings )
             catch (myError){
                cellStyles.add({name:"cal_background" + settings.styleSet,
                   basedOn:cellStyles.item("cal_baseNoEdges" + settings.styleSet),
-                  fillColor:colors.item("cal_background" + settings.styleSet),
+                 // fillColor:colors.item("cal_background" + settings.styleSet), //changed, dont want a background
                   appliedParagraphStyle:paragraphStyles.item( "cal_background" + settings.styleSet )});
             }
          }
