@@ -3674,10 +3674,10 @@ function SetTheDocumentStyles( settings )
       {
          // Cell Styles
          try{ cellStyles.item("cal_base" + settings.styleSet).name; }
-         catch (myError){
-            cellStyles.add({name:"cal_base" + settings.styleSet,
-               appliedParagraphStyle:paragraphStyles.item( "cal_base" + settings.styleSet )});
-         }
+         catch (myError){ var ms = 0.5; var dtd = "Dotted"
+            cellStyles.add({name:"cal_base" + settings.styleSet, appliedParagraphStyle:paragraphStyles.item( "cal_base" + settings.styleSet ),
+               topEdgeStrokeWeight:ms, rightEdgeStrokeWeight:ms, bottomEdgeStrokeWeight:ms, leftEdgeStrokeWeight:ms, 
+         topEdgeStrokeType:dtd, rightEdgeStrokeType:dtd, bottomEdgeStrokeType:dtd, leftEdgeStrokeType:dtd });		}
 
          try{ cellStyles.item("cal_baseNoEdges" + settings.styleSet).name; }
          catch (myError){
