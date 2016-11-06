@@ -3501,10 +3501,10 @@ function SetTheDocumentStyles( settings )
       if( settings.bHolidaysLayer )
       {
          try{ paragraphStyles.item("cal_holiday" + settings.styleSet).name; }
-         catch (myError){
+         catch (myError){ //changed, cal_holiday mod
             paragraphStyles.add({name:"cal_holiday" + settings.styleSet, basedOn:paragraphStyles.item("cal_base" + settings.styleSet),
-               justification:Justification.centerAlign,
-               pointSize:10,
+               justification:Justification.rightAlign,
+               pointSize:7,
                fillColor:colors.item("cal_holiday" + settings.styleSet) });
          }
 
