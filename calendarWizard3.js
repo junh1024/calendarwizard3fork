@@ -3432,7 +3432,7 @@ function SetTheDocumentStyles( settings )
       try{ paragraphStyles.item("cal_date" + settings.styleSet).name; }
       catch (myError){
          paragraphStyles.add({name:"cal_date" + settings.styleSet, basedOn:paragraphStyles.item("cal_base" + settings.styleSet),
-            justification:Justification.rightAlign,
+            justification:Justification.rightAlign, appliedFont:"Arial" , fontStyle:"Bold",
             nextStyle:paragraphStyles.item("cal_text" + settings.styleSet) });
       }
       if( settings.bHighlightSundays )
@@ -3556,7 +3556,7 @@ function SetTheDocumentStyles( settings )
          try{ paragraphStyles.item("cal_julianDate" + settings.styleSet).name; }
          catch (myError){
             paragraphStyles.add({name:"cal_julianDate" + settings.styleSet, basedOn:paragraphStyles.item("cal_base" + settings.styleSet),
-               justification:Justification.leftAlign, fillColor:colors.item("cal_julianDate" + settings.styleSet)});
+               justification:Justification.leftAlign, pointSize:7.5, fillColor:colors.item("cal_julianDate" + settings.styleSet)});
 			   paragraphStyles.add({name:"cal_julianDateWD" + settings.styleSet, basedOn:paragraphStyles.item("cal_julianDate" + settings.styleSet),
                fillColor:colors.item("cal_julianDateWD" + settings.styleSet)});
          }
@@ -3824,7 +3824,7 @@ function SetTheDocumentStyles( settings )
             try{ cellStyles.item("cal_julianDateText" + settings.styleSet).name; }
             catch (myError){
                cellStyles.add({name:"cal_julianDateText" + settings.styleSet, basedOn:cellStyles.item("cal_baseNoEdges" + settings.styleSet),
-                  appliedParagraphStyle:paragraphStyles.item( "cal_julianDate"  + settings.styleSet), leftInset:0.0, //1mm in inches
+                  appliedParagraphStyle:paragraphStyles.item( "cal_julianDate"  + settings.styleSet), leftInset:0.01/2.54, //0.01cm in inches
                   verticalJustification:VerticalJustification.BOTTOM_ALIGN //changed to BOTTOM_ALIGN
                   });
             }
