@@ -3210,7 +3210,7 @@ function SetTheDocumentStyles( settings )
             }
          }
 
-         if( settings.bHolidayStyleA )
+         if( true )//changed, I want this
          {
              try{ colors.item("cal_holidayA" + settings.styleSet).name; }
              catch (myError){
@@ -3501,19 +3501,19 @@ function SetTheDocumentStyles( settings )
       if( settings.bHolidaysLayer )
       {
          try{ paragraphStyles.item("cal_holiday" + settings.styleSet).name; } //changed, cal_holiday mod
-         catch (myError){ var ptsz = 7;
-            paragraphStyles.add({name:"cal_holiday" + settings.styleSet, basedOn:paragraphStyles.item("cal_base" + settings.styleSet),
-               justification:Justification.rightAlign,pointSize:ptsz,
-               underline:true, underlineOffset:-ptsz/2.6 ,underlineWeight:ptsz*1.3, //optimized for Asian Typography aka ArialUnicodeMS
+         catch (myError){ var ptsz = 7;  paragraphStyles.add({name:"cal_holiday" + settings.styleSet,
+            basedOn:paragraphStyles.item("cal_base" + settings.styleSet), justification:Justification.rightAlign, pointSize:ptsz,
+              underline:true, underlineOffset:-ptsz/2.6 ,underlineWeight:ptsz*1.3, //optimized for Asian Typography aka ArialUnicodeMS
                fillColor:"Paper" });
+               myDocument.characterStyles.add({name:"cal_holidayA", underlineColor:"cal_holidayA", pointSize:ptsz,
+              underline:true, underlineOffset:-ptsz/2.6 ,underlineWeight:ptsz*1.3, fillColor:"Paper"});
          }
-
          if( settings.bHolidayStyleA )
          {
              try{ paragraphStyles.item("cal_holidayA" + settings.styleSet).name; }
-             catch (myError){
-                paragraphStyles.add({name:"cal_holidayA" + settings.styleSet, basedOn:paragraphStyles.item("cal_holiday" + settings.styleSet),
-                   underlineColor:colors.item("cal_holidayA" + settings.styleSet) });
+             catch (myError){ paragraphStyles.add({name:"cal_holidayA" + settings.styleSet,
+             basedOn:paragraphStyles.item("cal_holiday" + settings.styleSet), underlineColor:colors.item("cal_holidayA" + settings.styleSet)});
+                   
              }
          }
          if( settings.bHolidayStyleB )
@@ -4256,8 +4256,8 @@ function bGetUserInput( settings, selector )
                }
                with(dialogColumns.add())
                {
-                 selector.AddTextLayer       = checkboxControls.add({checkedState:true});
-                 selector.AddHolidaysLayer   = checkboxControls.add({checkedState:false});
+                 selector.AddTextLayer       = checkboxControls.add({checkedState:false});//changed
+                 selector.AddHolidaysLayer   = checkboxControls.add({checkedState:true});//changed
                  selector.UseCalendarLayer   = checkboxControls.add({checkedState:true});//changed
                  selector.AddJulianDateLayer = checkboxControls.add({checkedState:true});//changed
                  selector.AddMoonsLayer      = checkboxControls.add({checkedState:false});
