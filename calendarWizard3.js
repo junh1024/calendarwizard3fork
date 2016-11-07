@@ -3500,12 +3500,12 @@ function SetTheDocumentStyles( settings )
 
       if( settings.bHolidaysLayer )
       {
-         try{ paragraphStyles.item("cal_holiday" + settings.styleSet).name; }
-         catch (myError){ //changed, cal_holiday mod
+         try{ paragraphStyles.item("cal_holiday" + settings.styleSet).name; } //changed, cal_holiday mod
+         catch (myError){ var ptsz = 7;
             paragraphStyles.add({name:"cal_holiday" + settings.styleSet, basedOn:paragraphStyles.item("cal_base" + settings.styleSet),
-               justification:Justification.rightAlign,
-               pointSize:7,
-               fillColor:colors.item("cal_holiday" + settings.styleSet) });
+               justification:Justification.rightAlign,pointSize:ptsz,
+               underline:true, underlineOffset:-ptsz/2.6 ,underlineWeight:ptsz*1.3, //optimized for Asian Typography aka ArialUnicodeMS
+               fillColor:"Paper" });
          }
 
          if( settings.bHolidayStyleA )
@@ -3513,7 +3513,7 @@ function SetTheDocumentStyles( settings )
              try{ paragraphStyles.item("cal_holidayA" + settings.styleSet).name; }
              catch (myError){
                 paragraphStyles.add({name:"cal_holidayA" + settings.styleSet, basedOn:paragraphStyles.item("cal_holiday" + settings.styleSet),
-                   fillColor:colors.item("cal_holidayA" + settings.styleSet) });
+                   underlineColor:colors.item("cal_holidayA" + settings.styleSet) });
              }
          }
          if( settings.bHolidayStyleB )
@@ -3521,7 +3521,7 @@ function SetTheDocumentStyles( settings )
              try{ paragraphStyles.item("cal_holidayB" + settings.styleSet).name; }
              catch (myError){
                 paragraphStyles.add({name:"cal_holidayB" + settings.styleSet, basedOn:paragraphStyles.item("cal_holiday" + settings.styleSet),
-                   fillColor:colors.item("cal_holidayB" + settings.styleSet) });
+                   underlineColor:colors.item("cal_holidayB" + settings.styleSet) });
              }
          }
          if( settings.bHolidayStyleC )
@@ -3529,7 +3529,7 @@ function SetTheDocumentStyles( settings )
              try{ paragraphStyles.item("cal_holidayC" + settings.styleSet).name; }
              catch (myError){
                 paragraphStyles.add({name:"cal_holidayC" + settings.styleSet, basedOn:paragraphStyles.item("cal_holiday" + settings.styleSet),
-                   fillColor:colors.item("cal_holidayC" + settings.styleSet) });
+                   underlineColor:colors.item("cal_holidayC" + settings.styleSet) });
              }
          }
          if( settings.bHolidayStyleD )
@@ -3537,7 +3537,7 @@ function SetTheDocumentStyles( settings )
              try{ paragraphStyles.item("cal_holidayD" + settings.styleSet).name; }
              catch (myError){
                 paragraphStyles.add({name:"cal_holidayD" + settings.styleSet, basedOn:paragraphStyles.item("cal_holiday" + settings.styleSet),
-                   fillColor:colors.item("cal_holidayD" + settings.styleSet) });
+                   underlineColor:colors.item("cal_holidayD" + settings.styleSet) });
              }
          }
       }
