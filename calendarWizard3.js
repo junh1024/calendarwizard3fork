@@ -3252,12 +3252,12 @@ function SetTheDocumentStyles( settings )
              }
          }
 
-         if( settings.bHolidayStyleD )
+         if( true ) //changed, I want this
          {
              try{ colors.item("cal_holidayD" + settings.styleSet).name; }
              catch (myError){
                 if( settings.sColorSpace == 'CMYK' ){
-                   colors.add({name:"cal_holidayD" + settings.styleSet, space:ColorSpace.cmyk, colorValue:[58,83,0,0]});
+                   colors.add({name:"cal_holidayD" + settings.styleSet, space:ColorSpace.cmyk, colorValue:[0,75,0,0]}); //changed
                 } else if ( settings.sColorSpace == 'RBG' ){
                    colors.add({name:"cal_holidayD" + settings.styleSet, space:ColorSpace.rgb, colorValue:[145,52,200]});
                 } else {
@@ -3281,7 +3281,7 @@ function SetTheDocumentStyles( settings )
          }
       }
 
-     /* if( settings.bBackgroundLayer ) //changed, dont make this color
+      if( settings.bBackgroundLayer ) //unchanged, i want this
       {
          try{ colors.item("cal_background" + settings.styleSet).name; }
          catch (myError){
@@ -3293,7 +3293,7 @@ function SetTheDocumentStyles( settings )
                colors.add({name:"cal_background" + settings.styleSet, space:ColorSpace.lab, colorValue:[100,0,0]});
             }
          }
-      }*/
+      }
 
       if( settings.bAddMiniCalendars )
       {
@@ -3508,7 +3508,7 @@ function SetTheDocumentStyles( settings )
                myDocument.characterStyles.add({name:"cal_holidayA", underlineColor:"cal_holidayA", pointSize:ptsz,
               underline:true, underlineOffset:-ptsz/2.6 ,underlineWeight:ptsz*1.3, fillColor:"Paper"});
          }
-         if( settings.bHolidayStyleA )
+         if( true ) //changed, i want this
          {
              try{ paragraphStyles.item("cal_holidayA" + settings.styleSet).name; }
              catch (myError){ paragraphStyles.add({name:"cal_holidayA" + settings.styleSet,
@@ -3532,7 +3532,7 @@ function SetTheDocumentStyles( settings )
                    underlineColor:colors.item("cal_holidayC" + settings.styleSet) });
              }
          }
-         if( settings.bHolidayStyleD )
+         if( true ) //changed, i want this
          {
              try{ paragraphStyles.item("cal_holidayD" + settings.styleSet).name; }
              catch (myError){
@@ -3882,7 +3882,7 @@ function SetTheDocumentStyles( settings )
             catch (myError){
                cellStyles.add({name:"cal_background" + settings.styleSet,
                   basedOn:cellStyles.item("cal_baseNoEdges" + settings.styleSet),
-                 // fillColor:colors.item("cal_background" + settings.styleSet), //changed, dont want a background
+                 fillColor:colors.item("cal_background" + settings.styleSet), //unchanged, do want a background
                   appliedParagraphStyle:paragraphStyles.item( "cal_background" + settings.styleSet )});
             }
          }
