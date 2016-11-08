@@ -3504,16 +3504,16 @@ function SetTheDocumentStyles( settings )
          catch (myError){ var ptsz = 7;  paragraphStyles.add({name:"cal_holiday" + settings.styleSet,
             basedOn:paragraphStyles.item("cal_base" + settings.styleSet), justification:Justification.rightAlign, pointSize:ptsz,
               underline:true, underlineOffset:-ptsz/2.6 ,underlineWeight:ptsz*1.3, //optimized for Asian Typography aka ArialUnicodeMS
-               fillColor:"Paper" });
-               myDocument.characterStyles.add({name:"cal_holidayA", underlineColor:"cal_holidayA", pointSize:ptsz,
-              underline:true, underlineOffset:-ptsz/2.6 ,underlineWeight:ptsz*1.3, fillColor:"Paper"});
+               fillColor:"Paper",  underlineColor:colors.item("cal_julianDateWD" )
+            });
          }
          if( true ) //changed, i want this
          {
              try{ paragraphStyles.item("cal_holidayA" + settings.styleSet).name; }
              catch (myError){ paragraphStyles.add({name:"cal_holidayA" + settings.styleSet,
-             basedOn:paragraphStyles.item("cal_holiday" + settings.styleSet), underlineColor:colors.item("cal_holidayA" + settings.styleSet)});
-                   
+             basedOn:paragraphStyles.item("cal_holiday" + settings.styleSet), underlineColor:colors.item("cal_holidayA" + settings.styleSet),
+			 justification:Justification.leftAlign
+			 });
              }
          }
          if( settings.bHolidayStyleB )
