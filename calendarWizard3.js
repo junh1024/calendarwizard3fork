@@ -1307,7 +1307,7 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
           holidaysCalendar.appliedTableStyle = myDocument.tableStyles.item("cal_holiday" + settings.styleSet);
           holidaysCalendar.rows.everyItem().cells.everyItem().appliedCellStyle = myDocument.cellStyles.item("cal_holidayText" + settings.styleSet);
           if(!settings.bExcludeMonthName )
-          {
+          {	holidaysCalendar.rows.itemByRange(2,6).cells.everyItem().insertionPoints.firstItem().appliedParagraphStyle = myDocument.paragraphStyles.item("cal_holidayD" + settings.styleSet);//changed
              holidaysCalendar.rows.firstItem().cells.everyItem().appliedCellStyle = myDocument.cellStyles.item("cal_holidayTitle" + settings.styleSet);
           }
       }
