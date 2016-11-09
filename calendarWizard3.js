@@ -195,7 +195,7 @@ settings.languageOptions         = new Array( 'English', //disable some language
 
 // defaults for calendar generation
 //settings.calendarSpacing = //changed, disabled.
-settings.calendarVerticalSpacing   = 0.2/2.54; //changed - 0.2cm in inches;
+settings.calendarVerticalSpacing   = 0.3/2.54; //changed - 0.x in inches;
 settings.calendarHorizontalSpacing = 0.5/2.54; //changed - 0.5cm in inches
 settings.miniCalendarSize = new Array( "2in", "2in", "2.75in", "2.75in" ); // 0.75 inches square
 settings.workWeekCellWidth = 0.25;
@@ -1572,9 +1572,9 @@ function buildCalendar( settings, frame, iMonth, iYear, bMiniCalendar )
       
       if( settings.bCellStyles )
       {
-          backgroundCalendar.appliedTableStyle = myDocument.tableStyles.item("cal_background" + settings.styleSet);
-          backgroundCalendar.rows.everyItem().cells.everyItem().appliedCellStyle = myDocument.cellStyles.item("cal_background" + settings.styleSet);
-      }
+          backgroundCalendar.appliedTableStyle = myDocument.tableStyles.item("cal_background" + settings.styleSet); //changed below line
+          backgroundCalendar.rows.itemByRange(2,6).cells.everyItem().appliedCellStyle=myDocument.cellStyles.item("cal_background"+settings.styleSet);
+      backgroundCalendar.rows.itemByRange(0,1).cells.everyItem().appliedCellStyle=myDocument.cellStyles.item("cal_baseNoEdges"+settings.styleSet); }
 
       if( settings.bCS )
       {
@@ -3674,11 +3674,9 @@ function SetTheDocumentStyles( settings )
       {  // Cell Styles
          
          try{ cellStyles.item("cal_base" + settings.styleSet).name; }
-         catch (myError){ var ms = 0.5; var dtd = "Dotted"; cellStyles.add({name:"cal_base" + settings.styleSet,
+         catch (myError){ cellStyles.add({name:"cal_base" + settings.styleSet,
             appliedParagraphStyle:paragraphStyles.item( "cal_base" + settings.styleSet ),
-               topEdgeStrokeWeight:ms, rightEdgeStrokeWeight:ms, bottomEdgeStrokeWeight:ms, leftEdgeStrokeWeight:ms, 
-         topEdgeStrokeType:dtd, rightEdgeStrokeType:dtd, bottomEdgeStrokeType:dtd, leftEdgeStrokeType:dtd, 
-		 topEdgeStrokeGapColor:"None", rightEdgeStrokeGapColor:"None", bottomEdgeStrokeGapColor:"None", leftEdgeStrokeGapColor:"None" });
+           });
 						}
          try{ cellStyles.item("cal_baseNoEdges" + settings.styleSet).name; }
          catch (myError){
@@ -3691,10 +3689,13 @@ function SetTheDocumentStyles( settings )
          }
 
          try{ cellStyles.item("cal_date" + settings.styleSet).name; }
-         catch (myError){
-            cellStyles.add({name:"cal_date" + settings.styleSet,
-               basedOn:cellStyles.item("cal_base" + settings.styleSet),
-               appliedParagraphStyle:paragraphStyles.item( "cal_date" + settings.styleSet )});
+         catch (myError){ var ms = 0.5; var dtd = "Dotted";
+            cellStyles.add({name:"cal_date" + settings.styleSet, basedOn:cellStyles.item("cal_base" + settings.styleSet),
+               appliedParagraphStyle:paragraphStyles.item( "cal_date" + settings.styleSet ),
+			        topEdgeStrokeWeight:ms, rightEdgeStrokeWeight:ms, bottomEdgeStrokeWeight:ms, leftEdgeStrokeWeight:ms, 
+         topEdgeStrokeType:dtd, rightEdgeStrokeType:dtd, bottomEdgeStrokeType:dtd, leftEdgeStrokeType:dtd, 
+		 topEdgeStrokeGapColor:"None", rightEdgeStrokeGapColor:"None", bottomEdgeStrokeGapColor:"None", leftEdgeStrokeGapColor:"None"
+			   });
          }
 
          if( settings.iFixedRowCount == 5 )
@@ -3713,7 +3714,7 @@ function SetTheDocumentStyles( settings )
          try{ cellStyles.item("cal_title" + settings.styleSet).name; }
          catch (myError){
             cellStyles.add({name:"cal_title" + settings.styleSet,
-               basedOn:cellStyles.item("cal_base" + settings.styleSet),
+               basedOn:cellStyles.item("cal_baseNoEdges" + settings.styleSet), //changed
                appliedParagraphStyle:paragraphStyles.item( "cal_title" + settings.styleSet)});
 
             if( settings.bAddMiniCalendars )
@@ -3726,7 +3727,7 @@ function SetTheDocumentStyles( settings )
          try{ cellStyles.item("cal_day" + settings.styleSet).name; }
          catch (myError){ 
             cellStyles.add({name:"cal_day" + settings.styleSet,  leftInset:0.0  ,rightInset:0.0 , //changed
-               basedOn:cellStyles.item("cal_base" + settings.styleSet),
+               basedOn:cellStyles.item("cal_baseNoEdges" + settings.styleSet),
                appliedParagraphStyle:paragraphStyles.item( "cal_day" + settings.styleSet )});
          }
 
@@ -3735,7 +3736,7 @@ function SetTheDocumentStyles( settings )
              try{ cellStyles.item("cal_sunday" + settings.styleSet).name; }
              catch (myError){
                 cellStyles.add({name:"cal_sunday" + settings.styleSet,
-                   basedOn:cellStyles.item("cal_base" + settings.styleSet),
+                   basedOn:cellStyles.item("cal_date" + settings.styleSet),
                    appliedParagraphStyle:paragraphStyles.item( "cal_sunday" + settings.styleSet )});
              }
 
@@ -3770,7 +3771,7 @@ function SetTheDocumentStyles( settings )
          try{ cellStyles.item("cal_empty" + settings.styleSet).name; }
          catch (myError){
             cellStyles.add({name:"cal_empty" + settings.styleSet,
-               basedOn:cellStyles.item("cal_base" + settings.styleSet),
+               basedOn:cellStyles.item("cal_date" + settings.styleSet),
                appliedParagraphStyle:paragraphStyles.item( "cal_date"  + settings.styleSet)});
          }
 
