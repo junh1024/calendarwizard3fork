@@ -1,10 +1,6 @@
 These changes to CW3 are optimized for my use. Some stuff is deleted.
 
-Optimized for:
-12 months over 2 pages, small designs, metric units, a few other tweaks
-
-
-Optimized for small designs, I've tried to make dates wrap instead of split for some months.
+It's optimized for a feature-rich calendar in a very small space, with a lot of hardcoded/changed options/defaults, so this is probably not for you, but it may serve as a practical API in-use example.
 
 Original was GPL so this is too. https://sourceforge.net/projects/calendarwizard/
 
