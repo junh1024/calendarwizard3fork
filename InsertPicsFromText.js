@@ -1,7 +1,7 @@
 var file1 = File.openDialog("select text file");
 file1.open("r");
 
-mypath=file1.readln () ; //1st line is path
+// mypath=file1.readln () ; //1st line is path
 lines=file1.read().split('\n');
 
 var document=app.activeDocument;  ;
@@ -20,31 +20,42 @@ var count=0;
 
 for (var i = 0; i < lines.length; i++)
 {
-// if (imageList[i] instanceof File) 
 	line=lines[i]	;
-	var fileName = mypath+lines[i];
-
-	if( firstImageLayer ) 
-	{	newLayer = document.layers[0]; 	firstImageLayer = false; }
-	else 
-	{	newLayer = document.layers.add();	}
-
-	// Give the layer the name of the image file
-	newLayer.name = line.substring(0, line.indexOf(".") );
-
-	// Place the image on the artboard
-	var thisfile = File(fileName);
-	// alert(fileName);
-	// alert(thisfile);
-
-	newGroup = newLayer.groupItems.createFromFile( thisfile );
-	newGroup.position = [ posX , posY ];
-
-	// }
-	posX += newGroup.width;
-	if(posX > (newGroup.width*16)) 
+	
+	if(line.search("[:/\\\\]")>0) //it's a path
 	{
-		posX = 0;
-		posY -= newGroup.height;
+		mypath=line;
 	}
+	else if(line.indexOf(".")>0)  //it's a file
+	{
+		var fileName = mypath+line;
+		var picture = File(fileName);
+
+		if( firstImageLayer ) 
+		{	newLayer = document.layers[0]; 	firstImageLayer = false; }
+		else 
+		{	newLayer = document.layers.add();	}
+
+		
+		newLayer.name = line.substring(0, line.indexOf(".") );
+
+		// Place the image on the artboard
+
+		newGroup = newLayer.groupItems.createFromFile( picture );
+		newGroup.position = [ posX , posY ];
+
+		// }
+		posX += newGroup.width;
+		if(posX > (newGroup.width*16)) 
+		{
+			posX = 0;
+			posY -= newGroup.height;
+		}
+		
+	}
+	else   //it's a text
+	{
+		alert("text"+line);
+	}
+
 }
