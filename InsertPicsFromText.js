@@ -20,29 +20,27 @@ var count=0;
 
 for (var i = 0; i < lines.length; i++)
 {
-// if (imageList[i] instanceof File) {
+// if (imageList[i] instanceof File) 
+	line=lines[i]	;
 	var fileName = mypath+lines[i];
 
 	if( firstImageLayer ) 
-	{
-		newLayer = document.layers[0];
-		firstImageLayer = false;
-	} else 
-	{
-		newLayer = document.layers.add();
-	}
+	{	newLayer = document.layers[0]; 	firstImageLayer = false; }
+	else 
+	{	newLayer = document.layers.add();	}
+
 	// Give the layer the name of the image file
-	newLayer.name = lines[i].substring(0, fileName.indexOf(".") );
+	newLayer.name = line.substring(0, line.indexOf(".") );
 
 	// Place the image on the artboard
 	var thisfile = File(fileName);
 	// alert(fileName);
 	// alert(thisfile);
-	// var thisfile = File("\~\Pictures\KC\AL Ships2\marker\AL Atago.png");
+
 	newGroup = newLayer.groupItems.createFromFile( thisfile );
 	newGroup.position = [ posX , posY ];
+
 	// }
-// }
 	posX += newGroup.width;
 	if(posX > (newGroup.width*16)) 
 	{
