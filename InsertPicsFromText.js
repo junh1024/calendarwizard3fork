@@ -15,23 +15,23 @@ var posX=0;
 var posY=0;
 var newlineheight=0;
 var newlinewidth=0;
-var horizontal = true;
-// var horizontal = false;
+// var horizontal = true;
+var horizontal = false;
 // var textleading=72;
 
 function resetline()
 {
-	if(horizontal)
-	{
-		posX=0;
-		posY=-newlineheight;
-	}
-	else
-	{
-		posY=0;
-		posX=+newlinewidth;
+	// if(horizontal)
+	// {
+		// posX=0;
+		// posY=-newlineheight;
+	// }
+	// else
+	// {
+		// posY=0;
+		// posX=+newlinewidth;
 
-	}
+	// }
 }
 
 for (var i = 0; i < lines.length; i++)
@@ -56,25 +56,32 @@ for (var i = 0; i < lines.length; i++)
 		newLayer.name = line.substring(0, line.indexOf(".") );
 
 		// Place the image on the artboard
-		try
-		{
-			newGroup = newLayer.groupItems.createFromFile( picture );
-			newGroup.position = [ posX , posY ];
-			if(horizontal)
-			{
-				posX += newGroup.width;
-				newlineheight=newGroup.height;
-			}	
-			else		
-			{
-				posY -= newGroup.height;
-				newlinewidth=newGroup.width;
-			}
-		}
-		catch(e)
-		{
+		// try
+		// {
+		// newGroup = newLayer.groupItems.createFromFile( picture );
+			var toplace = document.placedItems.add()
+			toplace.file=picture;
+			toplace.position=[posX , posY];
+			// img = document.place(picture);
+			// imgFrame = img[0].parent;
+			// imgFrame.move([posX , posY]);
 			
-		}
+			// newGroup.position = [ posX , posY ];
+			// if(horizontal)
+			// {
+				// posX += newGroup.width;
+				// newlineheight=newGroup.height;
+			// }	
+			// else		
+			// {
+				// posY -= newGroup.height;
+				// newlinewidth=newGroup.width;
+			// }
+		// }
+		// catch(e)
+		// {
+			// alert("error on " + line);
+		// }
 
 
 	}
