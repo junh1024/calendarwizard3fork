@@ -1,7 +1,6 @@
 var file1 = File.openDialog("select text file");
 file1.open("r");
 
-// mypath=file1.readln () ; //1st line is path
 lines=file1.read().split('\n');
 
 var document=app.activeDocument;  ;
@@ -11,13 +10,13 @@ app.coordinateSystem = CoordinateSystem.ARTBOARDCOORDINATESYSTEM;
 
 var firstImageLayer = true;
 var newLayer;
-var thisPlacedItem;
+// var thisPlacedItem;
 var posX=0;
 var posY=0;
-var count=0;
-var newGroup=false;
 var newlineheight=0;
-// var imageList = lines.getFiles();
+var newlinewidth=0;
+// var horizontal = true;
+var horizontal = false;
 
 for (var i = 0; i < lines.length; i++)
 {
@@ -26,8 +25,18 @@ for (var i = 0; i < lines.length; i++)
 	if(line.search("[:/\\\\]")>0) //it's a path
 	{
 		mypath=line;
-		posX=0;
-		posY=-newlineheight;
+		
+		if(horizontal)
+		{
+			posX=0;
+			posY=-newlineheight;
+		}
+		else
+		{
+			posY=0;
+			posX=+newlinewidth;
+
+		}
 	}
 	else if(line.indexOf(".")>0)  //it's a file
 	{
@@ -46,15 +55,20 @@ for (var i = 0; i < lines.length; i++)
 		newGroup = newLayer.groupItems.createFromFile( picture );
 		newGroup.position = [ posX , posY ];
 
-
-		posX += newGroup.width;
-		newlineheight=newGroup.height;
-		
+		if(horizontal)
+		{
+			posX += newGroup.width;
+			newlineheight=newGroup.height;
+		}	
+		else		
+		{
+			posY -= newGroup.height;
+			newlinewidth=newGroup.width;
+		}
 	}
 	else   //it's a text
 	{
 		alert("text"+line);
 	}
-
 
 }
