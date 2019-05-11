@@ -15,8 +15,24 @@ var posX=0;
 var posY=0;
 var newlineheight=0;
 var newlinewidth=0;
-// var horizontal = true;
-var horizontal = false;
+var horizontal = true;
+// var horizontal = false;
+// var textleading=72;
+
+function resetline()
+{
+	if(horizontal)
+	{
+		posX=0;
+		posY=-newlineheight;
+	}
+	else
+	{
+		posY=0;
+		posX=+newlinewidth;
+
+	}
+}
 
 for (var i = 0; i < lines.length; i++)
 {
@@ -25,18 +41,7 @@ for (var i = 0; i < lines.length; i++)
 	if(line.search("[:/\\\\]")>0) //it's a path
 	{
 		mypath=line;
-		
-		if(horizontal)
-		{
-			posX=0;
-			posY=-newlineheight;
-		}
-		else
-		{
-			posY=0;
-			posX=+newlinewidth;
-
-		}
+		resetline()
 	}
 	else if(line.indexOf(".")>0)  //it's a file
 	{
@@ -51,24 +56,45 @@ for (var i = 0; i < lines.length; i++)
 		newLayer.name = line.substring(0, line.indexOf(".") );
 
 		// Place the image on the artboard
-
-		newGroup = newLayer.groupItems.createFromFile( picture );
-		newGroup.position = [ posX , posY ];
-
-		if(horizontal)
+		try
 		{
-			posX += newGroup.width;
-			newlineheight=newGroup.height;
-		}	
-		else		
-		{
-			posY -= newGroup.height;
-			newlinewidth=newGroup.width;
+			newGroup = newLayer.groupItems.createFromFile( picture );
+			newGroup.position = [ posX , posY ];
+			if(horizontal)
+			{
+				posX += newGroup.width;
+				newlineheight=newGroup.height;
+			}	
+			else		
+			{
+				posY -= newGroup.height;
+				newlinewidth=newGroup.width;
+			}
 		}
+		catch(e)
+		{
+			
+		}
+
+
 	}
 	else   //it's a text
 	{
-		alert("text"+line);
+		// alert("text"+line);
+		// newlineheight
+		// if(horizontal)
+		// {
+			// newlineheight=textleading;
+		// }
+		// else
+		// {
+			// newlinewidth=textleading;
+
+		// }
+		// resetline();
+		// var aTF = document.textFrames.add();
+		// aTF.contents = line;
+		// aTF.position = [posX,posY];
 	}
 
 }
