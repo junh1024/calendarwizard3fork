@@ -18,25 +18,27 @@ var newlinewidth=0;
 // var horizontal = true;
 var horizontal = false;
 // var textleading=72;
-
+var toplace;
 function resetline()
 {
-	// if(horizontal)
-	// {
-		// posX=0;
-		// posY=-newlineheight;
-	// }
-	// else
-	// {
-		// posY=0;
-		// posX=+newlinewidth;
+	if(horizontal)
+	{
+		posX=0;
+		posY=-newlineheight;
+	}
+	else
+	{
+		posY=0;
+		posX=+newlinewidth;
 
-	// }
+	}
 }
 
 for (var i = 0; i < lines.length; i++)
 {
 	line=lines[i]	;
+	
+
 	
 	if(line.search("[:/\\\\]")>0) //it's a path
 	{
@@ -48,41 +50,39 @@ for (var i = 0; i < lines.length; i++)
 		var fileName = mypath+line;
 		var picture = File(fileName);
 
-		if( firstImageLayer ) 
-		{	newLayer = document.layers[0]; 	firstImageLayer = false; }
-		else 
-		{	newLayer = document.layers.add();	}
+		// if( firstImageLayer ) 
+		// {	newLayer = document.layers[0]; 	firstImageLayer = false; }
+		// else 
+		// {	newLayer = document.layers.add();	}
 
-		newLayer.name = line.substring(0, line.indexOf(".") );
+		// newLayer.name = line.substring(0, line.indexOf(".") );
 
 		// Place the image on the artboard
-		// try
-		// {
+		try
+		{
 		// newGroup = newLayer.groupItems.createFromFile( picture );
-			var toplace = document.placedItems.add()
+			toplace = document.placedItems.add()
+			toplace.name=line;
 			toplace.file=picture;
 			toplace.position=[posX , posY];
-			// img = document.place(picture);
-			// imgFrame = img[0].parent;
-			// imgFrame.move([posX , posY]);
 			
-			// newGroup.position = [ posX , posY ];
-			// if(horizontal)
-			// {
-				// posX += newGroup.width;
-				// newlineheight=newGroup.height;
-			// }	
-			// else		
-			// {
-				// posY -= newGroup.height;
-				// newlinewidth=newGroup.width;
-			// }
-		// }
-		// catch(e)
-		// {
-			// alert("error on " + line);
-		// }
-
+			if(horizontal)
+			{
+				posX += toplace.width;
+				newlineheight=toplace.height;
+			}	
+			else		
+			{
+				posY -= toplace.height;
+				newlinewidth=toplace.width;
+			}
+		}
+		catch(e)
+		{
+			alert("error on " + line);
+		}
+	// if(i%10==0)
+	// {resetline();}
 
 	}
 	else   //it's a text
