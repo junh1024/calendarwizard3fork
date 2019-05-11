@@ -15,7 +15,8 @@ var thisPlacedItem;
 var posX=0;
 var posY=0;
 var count=0;
-
+var newGroup=false;
+var newlineheight=0;
 // var imageList = lines.getFiles();
 
 for (var i = 0; i < lines.length; i++)
@@ -25,6 +26,8 @@ for (var i = 0; i < lines.length; i++)
 	if(line.search("[:/\\\\]")>0) //it's a path
 	{
 		mypath=line;
+		posX=0;
+		posY=-newlineheight;
 	}
 	else if(line.indexOf(".")>0)  //it's a file
 	{
@@ -36,7 +39,6 @@ for (var i = 0; i < lines.length; i++)
 		else 
 		{	newLayer = document.layers.add();	}
 
-		
 		newLayer.name = line.substring(0, line.indexOf(".") );
 
 		// Place the image on the artboard
@@ -44,18 +46,15 @@ for (var i = 0; i < lines.length; i++)
 		newGroup = newLayer.groupItems.createFromFile( picture );
 		newGroup.position = [ posX , posY ];
 
-		// }
+
 		posX += newGroup.width;
-		if(posX > (newGroup.width*16)) 
-		{
-			posX = 0;
-			posY -= newGroup.height;
-		}
+		newlineheight=newGroup.height;
 		
 	}
 	else   //it's a text
 	{
 		alert("text"+line);
 	}
+
 
 }
