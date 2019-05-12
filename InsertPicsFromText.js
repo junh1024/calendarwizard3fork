@@ -1,45 +1,49 @@
-var file1 = File.openDialog("select text file");
+var file1 = File.openDialog("select text file","*.txt");
 file1.open("r");
 
 lines=file1.read().split('\n');
 
 var document=app.activeDocument;  ;
-var mm = 2.83464567; // Metric MM converter…	
-// Set the script to work with artboard rulers	
-app.coordinateSystem = CoordinateSystem.ARTBOARDCOORDINATESYSTEM;	
+var mm = 2.83464567; // Metric MM converter…
+// Set the script to work with artboard rulers
+app.coordinateSystem = CoordinateSystem.ARTBOARDCOORDINATESYSTEM;
 
 var firstImageLayer = true;
 var newLayer;
 // var thisPlacedItem;
 var posX=0;
 var posY=0;
-var newlineheight=0;
-var newlinewidth=0;
+var spacing=0;
+
 // var horizontal = true;
 var horizontal = false;
-// var textleading=72;
 var toplace;
 function resetline()
 {
 	if(horizontal)
 	{
 		posX=0;
-		posY=-newlineheight;
+		posY=-spacing;
 	}
 	else
 	{
 		posY=0;
-		posX=+newlinewidth;
+		posX=+spacing;
+	}
+}
 
+function CheckSetSpacing(input)
+{
+	if(input>spacing)
+	{
+		spacing=input;
 	}
 }
 
 for (var i = 0; i < lines.length; i++)
 {
-	line=lines[i]	;
-	
+	line=lines[i];
 
-	
 	if(line.search("[:/\\\\]")>0) //it's a path
 	{
 		mypath=line;
@@ -50,18 +54,12 @@ for (var i = 0; i < lines.length; i++)
 		var fileName = mypath+line;
 		var picture = File(fileName);
 
-		// if( firstImageLayer ) 
-		// {	newLayer = document.layers[0]; 	firstImageLayer = false; }
-		// else 
-		// {	newLayer = document.layers.add();	}
-
-		// newLayer.name = line.substring(0, line.indexOf(".") );
-
 		// Place the image on the artboard
 		try
 		{
-		// newGroup = newLayer.groupItems.createFromFile( picture );
-			toplace = document.placedItems.add()
+		// newGroup = newLayer.groupItems.createFromFile( picture ); //embed file
+		// newLayer.name = line.substring(0, line.indexOf(".") );
+			toplace = document.placedItems.add() //reference file
 			toplace.name=line;
 			toplace.file=picture;
 			toplace.position=[posX , posY];
@@ -69,17 +67,17 @@ for (var i = 0; i < lines.length; i++)
 			if(horizontal)
 			{
 				posX += toplace.width;
-				newlineheight=toplace.height;
+				CheckSetSpacing(toplace.height);
 			}	
-			else		
+			else
 			{
 				posY -= toplace.height;
-				newlinewidth=toplace.width;
+				CheckSetSpacing(toplace.width);
 			}
 		}
 		catch(e)
 		{
-			alert("error on " + line);
+			//alert("error on " + line);
 		}
 	// if(i%10==0)
 	// {resetline();}
@@ -88,20 +86,9 @@ for (var i = 0; i < lines.length; i++)
 	else   //it's a text
 	{
 		// alert("text"+line);
-		// newlineheight
-		// if(horizontal)
-		// {
-			// newlineheight=textleading;
-		// }
-		// else
-		// {
-			// newlinewidth=textleading;
-
-		// }
 		// resetline();
 		// var aTF = document.textFrames.add();
 		// aTF.contents = line;
 		// aTF.position = [posX,posY];
 	}
-
 }
