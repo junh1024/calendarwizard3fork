@@ -30,4 +30,4 @@ This inserts pictures from a text file. Definition:
 * Anything else is a comment & will be ignored
 * Errors are silently ignored
 * To do horizontal layout, set *horizontal* to true
-* It is recommend to have your artboard at the top left of the drawing space to discourage pictures being places outside of the drawing space
+* It's recommended to have your artboard at the top left of the drawing space to discourage pictures being placed outside of the drawing space
